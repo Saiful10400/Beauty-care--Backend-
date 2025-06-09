@@ -1,0 +1,250 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// user.
+
+model user {
+  userId    String  @id @default(uuid())
+  email     String  @unique
+  password  String
+  role      roles
+  status    status  @default(Active)
+  isDeleted Boolean @default(false)
+
+  buyer               buyer?
+  vendor              vendor?
+  admin               admin?
+  followingStore      shopUser[]
+  review              review[]
+  // order               order[]
+  created             DateTime         @default(now())
+  updated             DateTime         @updatedAt()
+  recentProductsVisit recentProducts[]
+  order               order[]
+}
+
+// shopuser
+model shopUser {
+  userId String
+  shopId String
+
+  userrel user @relation(fields: [userId], references: [userId])
+  shoprel shop @relation(fields: [shopId], references: [shopId])
+
+  @@id([userId, shopId])
+}
+
+// ** sub roles.
+
+model buyer {
+  buyerId   String   @id @default(uuid())
+  userId    String   @unique
+  users     user     @relation(fields: [userId], references: [userId])
+  status    status   @default(Active)
+  email     String
+  name      String
+  photo     String?  @default("")
+  isDeleted Boolean  @default(false)
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt()
+}
+
+model vendor {
+  vendorId  String  @id @default(uuid())
+  userId    String  @unique
+  users     user    @relation(fields: [userId], references: [userId])
+  status    status  @default(Active)
+  email     String
+  name      String
+  photo     String? @default("")
+  isDeleted Boolean @default(false)
+
+  // shop relation.
+  shopId  shop?
+  created DateTime @default(now())
+  updated DateTime @updatedAt()
+}
+
+model admin {
+  adminId   String   @id @default(uuid())
+  userId    String   @unique
+  users     user     @relation(fields: [userId], references: [userId])
+  status    status   @default(Active)
+  email     String
+  name      String
+  photo     String?  @default("")
+  isDeleted Boolean  @default(false)
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt()
+}
+
+// / //////////////end./////////////////
+
+// shop
+model shop {
+  shopId      String     @id @default(uuid())
+  name        String
+  status      status     @default(Active)
+  description String
+  logo        String
+  products    product[]
+  vendorId    String     @unique
+  vendor      vendor     @relation(fields: [vendorId], references: [vendorId])
+  followersId shopUser[]
+  coupne      coupne[]
+  created     DateTime   @default(now())
+  updated     DateTime   @updatedAt()
+  order       order[]
+}
+
+model product {
+  productId           String           @id @default(uuid())
+  name                String
+  price               Float
+  categoryId          String
+  categoryref         category         @relation(fields: [categoryId], references: [categoryId])
+  brandId             String
+  brand               brand            @relation(fields: [brandId], references: [brandId])
+  image               String
+  carouselImages      String[]
+  description         String
+  shopId              String
+  inventoryCount      Int
+  flashSale           Boolean          @default(false)
+  discount            Int              @default(0)
+  isDeleted           Boolean          @default(false)
+  publishStatus       publishStatus    @default(Publick)
+  shop                shop             @relation(fields: [shopId], references: [shopId])
+  review              review[]
+  // order               order[]
+  slug                String           @unique()
+  created             DateTime         @default(now())
+  updated             DateTime         @updatedAt()
+  recentProductsVisit recentProducts[]
+  productOrder        productOrder[]
+}
+
+model category {
+  categoryId String    @id @default(uuid())
+  name       String    @unique
+  logo       String
+  slug       String    @unique
+  productId  product[]
+  created    DateTime  @default(now())
+  updated    DateTime  @updatedAt()
+}
+
+model review {
+  reviewId      String   @id @default(uuid())
+  productId     String
+  product       product  @relation(fields: [productId], references: [productId])
+  userMessage   String?
+  vendorMessage String?
+  userId        String
+  user          user     @relation(fields: [userId], references: [userId])
+  created       DateTime @default(now())
+  updated       DateTime @updatedAt()
+}
+
+model order {
+  orderId String @id @default(uuid())
+
+  userId String
+  user   user   @relation(fields: [userId], references: [userId])
+
+  shopId        String
+  shop          shop          @relation(fields: [shopId], references: [shopId])
+  address       String
+  amount        Float
+  paymentStatus paymentStatus @default(Unpaid)
+  transectionId String?
+
+  created DateTime @default(now())
+  updated DateTime @updatedAt()
+
+  productOrder productOrder[]
+}
+
+model productOrder {
+  porductId String
+  orderId   String
+  shop      product @relation(fields: [porductId], references: [productId])
+  order     order   @relation(fields: [orderId], references: [orderId])
+
+  @@id([porductId, orderId])
+}
+
+enum paymentStatus {
+  Paid
+  Unpaid
+}
+
+model coupne {
+  coupneId       String   @id @default(uuid())
+  shopId         String
+  shop           shop     @relation(fields: [shopId], references: [shopId])
+  code           String   @unique
+  discount       Int
+  minimumExpence Int
+  untill         DateTime
+}
+
+model recentProducts {
+  recentProductId String  @id @default(uuid())
+  productId       String
+  product         product @relation(fields: [productId], references: [productId])
+
+  userId  String
+  user    user     @relation(fields: [userId], references: [userId])
+  created DateTime @default(now())
+}
+
+// brand.
+model brand {
+  brandId String @id @default(uuid())
+  name    String @unique
+  slug    String @unique
+  logo    String
+
+  created DateTime  @default(now())
+  updated DateTime  @updatedAt()
+  product product[]
+}
+
+// enums
+enum roles {
+  Admin
+  User
+  Vendor
+}
+
+enum status {
+  Block
+  Active
+}
+
+enum publishStatus {
+  Publick
+  Private
+}
+
+model banner {
+  bannerId  String   @id @default(uuid())
+  bannerUrl String
+  route     String?
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt()
+}
