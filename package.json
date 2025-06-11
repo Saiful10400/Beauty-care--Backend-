@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "@prisma/client": "^6.0.1",
     "@types/cookie-parser": "^1.4.7",
     "@types/jsonwebtoken": "^9.0.6",
     "axios": "^1.7.7",
@@ -38,10 +37,7 @@
     "start": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "build": "tsc",
     "lint": "npx eslint src --ignore-pattern .ts",
-    "lint:fix": "npx eslint dev --fix",
-    "migrate": "npx prisma migrate dev --name init",
-    "studio": "npx prisma studio",
-    "postinstall": "prisma generate"
+    "lint:fix": "npx eslint dev --fix"
   },
   "author": "",
   "license": "ISC",
