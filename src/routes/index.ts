@@ -1,12 +1,22 @@
 import { Router } from "express";
-import authenticationRoutes from "../Modules/Authentication/authentication.routes";
+import generalRouter from "../Modules/General/general.routes";
+import brandRouter from "../Modules/Brand/brand.routes";
+import categoryRouter from "../Modules/Category/catogory.routes";
 
 const routes = Router();
 
 const moduleRoutes = [
   {
-    path: "/auth",
-    route: authenticationRoutes,
+    path: "/general",
+    route: generalRouter,
+  },
+  {
+    path: "/brand",
+    route: brandRouter,
+  },
+  {
+    path: "/category",
+    route: categoryRouter,
   },
 ];
 
