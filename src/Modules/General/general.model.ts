@@ -14,7 +14,7 @@ const generalSchema = new Schema<Tgeneral>(
       instagram: { type: String, required: true },
     },
   },
-  { timestamps: true }
+  { timestamps: true ,versionKey:false}
 );
 
 export const generalModel = model<Tgeneral>("General", generalSchema);

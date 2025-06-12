@@ -10,7 +10,7 @@ const BrandSchema: Schema = new Schema<Tbrand>(
     websiteUrl: { type: String },
     isFeatured: { type: Boolean, default: true },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 // Create and export the model
