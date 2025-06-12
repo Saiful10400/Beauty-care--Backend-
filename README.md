@@ -1,66 +1,149 @@
+# 🛍️ E-Commerce API Documentation
 
+**Base URL:** `http://localhost:8000/api`
 
-## Overview
+---
 
-This repository serves as the backend for our e-commerce platform, providing a secure, scalable, and efficient foundation to support all core functionalities. It powers essential features such as product management, user authentication, order processing, and payment handling through a well-structured RESTful API. Built with modern technologies and best practices, this backend ensures seamless communication with the frontend, enabling a smooth and reliable shopping experience for users.  
+## 📦 Product Routes (`/product`)
 
+### ➕ Create a Product  
+`POST /product/create`  
+Creates a new product.  
 
-### Core Features
-- **Product Management:** Comprehensive CRUD operations for products, categories, and inventory.
-- **User Authentication:** Secure user registration, login, and role-based access control (RBAC).
-- **Order Processing:** Efficient order management, including cart handling, checkout, and order history.
-- **Payment Integration:** Supports secure payment processing through multiple payment gateways.
-- **Database Optimization:** Well-structured database models for efficient querying and data consistency.
-- **RESTful API:** Provides well-documented endpoints for seamless integration with the frontend.
-- **Error Handling:** Centralized error management for smooth and predictable API responses.
-- **Scalable Architecture:** Designed to accommodate future feature expansions and high traffic loads.
+📥 **Body:**  
+```json
+{
+  "name": "T-Shirt",
+  "slug": "t-shirt",
+  "price": 1000,
+  "brandId": "ObjectId",
+  "categoryIds": ["ObjectId"],
+  "inStock": true,
+  "images": ["https://example.com/image.jpg"]
+}
+```
 
-## Technology Used
+---
 
-- **Node.js:** JavaScript runtime for scalable server-side applications.
-- **Express.js:** Lightweight web framework for building the API.
-- **PostgreSQL**: Relational database for structured and reliable data management.  
-- **JWT:** Secure authentication and authorization.
-- **Amar Pay:** For handling secure payments.
-- **TypeScript:** Ensures type safety across the backend codebase.
-  
-## How to Run the Project Locally
+### 🔍 Get a Product by Slug  
+`GET /product/get/:slug`  
+Retrieves a product using its slug.  
 
-1. Clone the repository:
+📘 **Params:**  
+- `slug` — string (e.g., `t-shirt`)
 
-    ```bash
-    git clone https://github.com/Saiful10400/Apollow-Assignment-9-back-end
-    ```
+---
 
-2. Navigate to the project directory:
+### ✏️ Update a Product by Slug  
+`PUT /product/update/:slug`  
+Updates a product using its slug.  
 
-    ```bash
-    cd your-repo-name
-    ```
+📘 **Params:**  
+- `slug` — string  
+📥 **Body:** Same structure as in `POST /product/create`.
 
-3. Install dependencies:
+---
 
-    ```bash
-    npm install
-    ```
+## 🏷️ Brand Routes (`/brand`)
 
-4. Start the development server:
+### ➕ Create a Brand  
+`POST /brand/create`  
+Creates a new brand.
 
-    ```bash
-    npm run dev
-    ```
+📥 **Body:**
+```json
+{
+  "name": "Nike",
+  "description": "Top sportswear brand",
+  "logoUrl": "https://example.com/logo.png",
+  "websiteUrl": "https://nike.com"
+}
+```
 
-5. Open your browser and visit:
+---
 
-    ```bash
-    http://localhost:5173
-    ```
+### 📄 Get All Brands  
+`GET /brand/get`  
+Retrieves all brands.
 
-## How to Contribute
+---
 
-1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature-name`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-name`).
-5. Create a pull request.
+## 📂 Category Routes (`/category`)
 
+### ➕ Create a Category  
+`POST /category/create`  
+Creates a new category.
+
+📥 **Body:**
+```json
+{
+  "name": "Clothing",
+  "slug": "clothing",
+  "description": "Apparel and garments"
+}
+```
+
+---
+
+### 📄 Get All Categories  
+`GET /category/get`  
+Retrieves all categories.
+
+---
+
+## 📬 Order Routes (`/order`)
+
+### 🛒 Create an Order  
+`POST /order/create`  
+Creates a new customer order.
+
+📥 **Body:**
+```json
+{
+  "customerName": "Ahmed Hossain",
+  "customerPhone": "+8801700000001",
+  "customerAddress": "House 5, Road 12, Gulshan 2, Dhaka",
+  "products": [
+    {
+      "productId": "ObjectId",
+      "quantity": 2,
+      "price": 950
+    }
+  ],
+  "totalAmount": 1900,
+  "paymentMethod": "COD"
+}
+```
+
+---
+
+### 📦 Get Order by ID  
+`GET /order/get/:id`  
+Retrieves an order by its MongoDB `_id`.
+
+📘 **Params:**  
+- `id` — string (MongoDB ObjectId)
+
+---
+
+## ⚙️ General Settings Routes (`/general`)
+
+### 🔄 Update General Settings  
+`PUT /general/update`  
+Updates general site configuration (e.g., site name, footer info).
+
+📥 **Body:** *Structure depends on your general settings schema*
+
+---
+
+### 📄 Get General Settings  
+`GET /general/get`  
+Fetches current general settings.
+
+---
+
+## ✅ Notes
+
+- All endpoints return standard JSON responses.
+- For future enhancements: add authentication, validation, and error schemas.
+- Consider adding status codes and example responses if you want Swagger/OpenAPI support next.
