@@ -27,8 +27,21 @@ const getAProductBySlug = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// update a product controller
+const updateAProduct = catchAsync(async (req: Request, res: Response) => {
+  const { slug } = req.params;
+  const data = await productService.updateProduct(slug, req.body);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Product updated successfully",
+  });
+});
+
 const productcontroller = {
   createAProduct,
   getAProductBySlug,
+  updateAProduct,
 };
 export default productcontroller;

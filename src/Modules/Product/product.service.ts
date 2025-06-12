@@ -16,8 +16,17 @@ const getAProductBySlug = async (slug: string) => {
   return result;
 };
 
+// update product service
+const updateProduct = async (slug: string, payload: TProduct) => {
+  const result = await productModel.findOneAndUpdate({ slug }, payload, {
+    new: true,
+  });
+  return result;
+};
+
 const productService = {
   createProduct,
   getAProductBySlug,
+  updateProduct,
 };
 export default productService;

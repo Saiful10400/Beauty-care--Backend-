@@ -16,6 +16,11 @@ const apis: tApi[] = [
     path: "/get/:slug",
     fn: productcontroller.getAProductBySlug,
   },
+  {
+    method: "put",
+    path: "/update/:slug",
+    fn: productcontroller.updateAProduct,
+  },
 ];
 
 apis.forEach((api) => {
