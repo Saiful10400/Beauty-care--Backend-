@@ -9,8 +9,8 @@ const createBrand = async (payload: Tbrand) => {
 
 //get brands.
 
-const getBrands = async () => {
-  const result = await brandModel.find();
+const getBrands = async (limit: number, offset: number) => {
+  const result = await brandModel.find().limit(limit).skip(offset);
   return result;
 };
 

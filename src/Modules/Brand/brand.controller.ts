@@ -17,7 +17,10 @@ const createBrand = catchAsync(async (req: Request, res: Response) => {
 
 //get brands controller
 const getBrands = catchAsync(async (req: Request, res: Response) => {
-  const data = await brandService.getBrands();
+  const data = await brandService.getBrands(
+    Number(req.query.limit),
+    Number(req.query.offset)
+  );
   sendResponse(res, {
     data,
     success: true,

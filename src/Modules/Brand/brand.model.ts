@@ -4,7 +4,7 @@ import { Tbrand } from "./brand.types";
 // Define the schema
 const BrandSchema: Schema = new Schema<Tbrand>(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     description: { type: String },
     logoUrl: { type: String },
     websiteUrl: { type: String },

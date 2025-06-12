@@ -18,7 +18,10 @@ const createCategory = catchAsync(async (req: Request, res: Response) => {
 
 // retrieve all categories
 const getAllCategories = catchAsync(async (req: Request, res: Response) => {
-  const data = await categoryService.getAllCategories();
+  const data = await categoryService.getAllCategories(
+    Number(req.query.limit),
+    Number(req.query.offset)
+  );
   sendResponse(res, {
     data,
     success: true,
