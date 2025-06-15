@@ -21,6 +21,11 @@ const apis: tApi[] = [
     path: "/update/:slug",
     fn: productcontroller.updateAProduct,
   },
+  {
+    method: "delete",
+    path: "/delete/:id",
+    fn: productcontroller.deleteAProduct,
+  },
 ];
 
 apis.forEach((api) => {

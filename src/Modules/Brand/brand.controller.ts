@@ -29,8 +29,21 @@ const getBrands = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete brand controller
+const deleteBrand = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await brandService.deleteBrand(id);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "brand deleted",
+  });
+});
+
 const brandController = {
   createBrand,
   getBrands,
+  deleteBrand,
 };
 export default brandController;

@@ -13,8 +13,15 @@ const getAllCategories = async (limit: number, offset: number) => {
   return result;
 };
 
+// delete a category by id
+const deleteCategory = async (id: string) => {
+  const result = await categoryModel.findByIdAndDelete(id);
+  return result;
+};
+
 const categoryService = {
   createCategory,
   getAllCategories,
+  deleteCategory,
 };
 export default categoryService;

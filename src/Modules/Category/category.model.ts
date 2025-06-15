@@ -11,7 +11,7 @@ const CategorySchema = new Schema<tCategory>(
   },
   {
     timestamps: false,
-    versionKey:false
+    versionKey: false,
   }
 );
 

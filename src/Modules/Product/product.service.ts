@@ -24,9 +24,16 @@ const updateProduct = async (slug: string, payload: TProduct) => {
   return result;
 };
 
+// delete a product by id.
+const deleteProduct = async (id: string) => {
+  const result = await productModel.findByIdAndDelete(id);
+  return result;
+};
+
 const productService = {
   createProduct,
   getAProductBySlug,
   updateProduct,
+  deleteProduct,
 };
 export default productService;

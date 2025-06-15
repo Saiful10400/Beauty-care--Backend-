@@ -12,6 +12,11 @@ type tApi = {
 const apis: tApi[] = [
   { method: "post", path: "/create", fn: categoryController.createCategory },
   { method: "get", path: "/get", fn: categoryController.getAllCategories },
+  {
+    method: "delete",
+    path: "/delete/:id",
+    fn: categoryController.deleteCategory,
+  },
 ];
 
 apis.forEach((api) => {

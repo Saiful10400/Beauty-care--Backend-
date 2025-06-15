@@ -14,7 +14,13 @@ const getBrands = async (limit: number, offset: number) => {
   return result;
 };
 
+// delete a brand by id
+const deleteBrand = async (id: string) => {
+  const result = await brandModel.findByIdAndDelete(id);
+  return result;
+};  
+
 export const brandService = {
   createBrand,
-  getBrands,
+  getBrands,deleteBrand
 };
