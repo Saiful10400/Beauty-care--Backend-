@@ -27,8 +27,20 @@ const updateBanner = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// 3. get banners
+const getBanners = catchAsync(async (req: Request, res: Response) => {
+  const data = await bannerService.getBanners();
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Banners retrieved successfully",
+  });
+});
+
 const bannerController = {
   createBanner,
   updateBanner,
+  getBanners,
 };
 export default bannerController;

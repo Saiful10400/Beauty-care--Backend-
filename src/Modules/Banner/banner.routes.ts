@@ -11,7 +11,7 @@ type tApi = {
 
 const apis: tApi[] = [
   { method: "post", path: "/create", fn: bannerController.createBanner },
-  { method: "get", path: "/get", fn: bannerController.createBanner },
+  { method: "get", path: "/get", fn: bannerController.getBanners },
   { method: "put", path: "/update/:id", fn: bannerController.updateBanner },
 ];
 

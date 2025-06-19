@@ -5,6 +5,7 @@ import categoryRouter from "../Modules/Category/catogory.routes";
 import productRouter from "../Modules/Product/product.routes";
 import orderRouter from "../Modules/Order/order.routes";
 import bannerRoute from "../Modules/Banner/banner.routes";
+import facebookReviewRoute from "../Modules/FacebookReview(admin)/review.route";
 
 const routes = Router();
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: "/banner",
     route: bannerRoute,
+  },
+  {
+    path: "/facebook-review",
+    route: facebookReviewRoute,
   },
 ];
 

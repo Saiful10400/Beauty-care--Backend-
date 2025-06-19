@@ -15,8 +15,15 @@ const updateBanner = async (id: string, payload: Partial<TBanner>) => {
   return result;
 };
 
+// get banners
+const getBanners = async () => {
+  const result = await bannerModel.find();
+  return result;
+};
+
 const bannerService = {
   createBanner,
   updateBanner,
+  getBanners,
 };
 export default bannerService;
