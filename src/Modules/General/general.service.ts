@@ -3,6 +3,7 @@ import { Tgeneral } from "./general.types";
 
 // update general.
 const updateGeneral = async (payload: Partial<Tgeneral>) => {
+  console.log(payload,"Payload")
   const result = await generalModel.findOneAndUpdate({}, payload, {
     upsert: true,
   });
