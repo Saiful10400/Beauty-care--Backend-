@@ -13,18 +13,23 @@ const apis: tApi[] = [
   { method: "post", path: "/create", fn: productcontroller.createAProduct },
   {
     method: "get",
-    path: "/get/:slug",
-    fn: productcontroller.getAProductBySlug,
+    path: "/get/:id",
+    fn: productcontroller.getProductById,
   },
   {
     method: "put",
-    path: "/update/:slug",
+    path: "/update/:id",
     fn: productcontroller.updateAProduct,
   },
   {
     method: "delete",
     path: "/delete/:id",
     fn: productcontroller.deleteAProduct,
+  },
+  {
+    method: "get",
+    path: "/get",
+    fn: productcontroller.getProducts,
   },
 ];
 

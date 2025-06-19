@@ -29,6 +29,18 @@ const getBrands = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get brand by id controller
+const getBrandById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await brandService.getBrandById(id);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Brand retrieved successfully",
+  });
+});
+
 // delete brand controller
 const deleteBrand = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -41,9 +53,24 @@ const deleteBrand = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// delete brand controller
+const updateBrand = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await brandService.updateBrand(id, req.body);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "brand updated",
+  });
+});
+
+
 const brandController = {
   createBrand,
   getBrands,
   deleteBrand,
+  getBrandById,
+  updateBrand,
 };
 export default brandController;

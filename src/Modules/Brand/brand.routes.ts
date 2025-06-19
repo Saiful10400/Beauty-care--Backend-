@@ -12,7 +12,9 @@ type tApi = {
 const apis: tApi[] = [
   { method: "post", path: "/create", fn: brandController.createBrand },
   { method: "get", path: "/get", fn: brandController.getBrands },
+  { method: "get", path: "/get/:id", fn: brandController.getBrandById },
   { method: "delete", path: "/delete/:id", fn: brandController.deleteBrand },
+  { method: "put", path: "/update/:id", fn: brandController.updateBrand },
 ];
 
 apis.forEach((api) => {

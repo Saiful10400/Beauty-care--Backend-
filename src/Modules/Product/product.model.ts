@@ -16,18 +16,16 @@ const ProductSchema = new Schema(
     },
 
     // Array of references to Category
-    categoryIds: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
-        required: true,
-      },
-    ],
+    categoryIds: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
 
     price: { type: Number, required: true },
-    discountPrice: { type: Number },
+    discountPrice: { type: Number, default: 0 },
 
-    inStock: { type: Boolean, required: true, default: true },
+    inStock: { type: Boolean, required: true },
 
     images: {
       type: [String],

@@ -15,10 +15,18 @@ const createAProduct = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// get a product by slug controller
-const getAProductBySlug = catchAsync(async (req: Request, res: Response) => {
-  const { slug } = req.params;
-  const data = await productService.getAProductBySlug(slug);
+// get a product by id controller
+const getProductById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await productService.getProductById(id);
+  if (!data) {
+    return sendResponse(res, {
+      data: null,
+      success: false,
+      statusCode: httpStatus.NOT_FOUND,
+      message: "Product not found",
+    });
+  }
   sendResponse(res, {
     data,
     success: true,
@@ -27,10 +35,21 @@ const getAProductBySlug = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get all products controller
+const getProducts = catchAsync(async (req: Request, res: Response) => {
+  const data = await productService.getProducts();
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Products retrieved successfully",
+  });
+});
+
 // update a product controller
 const updateAProduct = catchAsync(async (req: Request, res: Response) => {
-  const { slug } = req.params;
-  const data = await productService.updateProduct(slug, req.body);
+  const { id } = req.params;
+  const data = await productService.updateProduct(id, req.body);
   sendResponse(res, {
     data,
     success: true,
@@ -53,8 +72,10 @@ const deleteAProduct = catchAsync(async (req: Request, res: Response) => {
 
 const productcontroller = {
   createAProduct,
-  getAProductBySlug,
+
+  getProducts,
   updateAProduct,
   deleteAProduct,
+  getProductById,
 };
 export default productcontroller;

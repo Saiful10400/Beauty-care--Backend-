@@ -12,6 +12,8 @@ type tApi = {
 const apis: tApi[] = [
   { method: "post", path: "/create", fn: categoryController.createCategory },
   { method: "get", path: "/get", fn: categoryController.getAllCategories },
+  { method: "get", path: "/get/:id", fn: categoryController.getCategoryById },
+  { method: "put", path: "/update/:id", fn: categoryController.updateCategory },
   {
     method: "delete",
     path: "/delete/:id",
