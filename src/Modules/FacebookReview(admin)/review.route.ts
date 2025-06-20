@@ -21,9 +21,9 @@ const apis: tApi[] = [
     fn: facebookReviewController.getFacebookReviews,
   },
   {
-    method: "put",
-    path: "/update/:id",
-    fn: facebookReviewController.updateFacebookReview,
+    method: "delete",
+    path: "/delete/:id",
+    fn: facebookReviewController.deleteFacebookReview,
   },
 ];
 

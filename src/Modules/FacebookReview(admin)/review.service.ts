@@ -9,13 +9,8 @@ const createFacebookREview = async (payload: TFacebookReview) => {
 };
 
 //2. update review service
-const updateFacebookReview = async (
-  id: string,
-  payload: Partial<TFacebookReview>
-) => {
-  const result = await facebookReviewModel.findByIdAndUpdate(id, payload, {
-    new: true,
-  });
+const deleteFacebookReview = async (id: string) => {
+  const result = await facebookReviewModel.findByIdAndDelete(id);
   return result;
 };
 
@@ -27,7 +22,7 @@ const getFacebookReviews = async () => {
 
 const facebooReviewService = {
   createFacebookREview,
-  updateFacebookReview,
+  deleteFacebookReview,
   getFacebookReviews,
 };
 export default facebooReviewService;

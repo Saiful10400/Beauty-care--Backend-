@@ -18,14 +18,14 @@ const createFacebookReview = catchAsync(async (req: Request, res: Response) => {
 });
 
 //update facebook review controller
-const updateFacebookReview = catchAsync(async (req: Request, res: Response) => {
+const deleteFacebookReview = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const data = await facebooReviewService.updateFacebookReview(id, req.body);
+  const data = await facebooReviewService.deleteFacebookReview(id);
   sendResponse(res, {
     data,
     success: true,
     statusCode: httpStatus.OK,
-    message: "Facebook review updated successfully.",
+    message: "Facebook review deleted successfully.",
   });
 });
 
@@ -42,7 +42,7 @@ const getFacebookReviews = catchAsync(async (req: Request, res: Response) => {
 
 const facebookReviewController = {
   createFacebookReview,
-  updateFacebookReview,
+  deleteFacebookReview,
   getFacebookReviews,
 };
 
