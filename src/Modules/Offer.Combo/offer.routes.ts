@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import offercontroller from "./offer.controller";
 
-const comboOfferRoute = Router();
+const offerRoutes = Router();
 
 type tApi = {
   path: string;
@@ -23,11 +23,21 @@ const apis: tApi[] = [
     path: "/get",
     fn: offercontroller.getAll,
   },
+  {
+    method: "put",
+    path: "/update/freeGift",
+    fn: offercontroller.updateFreeOffer,
+  },
+  {
+    method: "put",
+    path: "/update/percentageOffer",
+    fn: offercontroller.updatePercentegeOffer,
+  },
 ];
 
 apis.forEach((api) => {
-  comboOfferRoute[api.method](api.path, api.fn);
+  offerRoutes[api.method](api.path, api.fn);
 });
 
-export default comboOfferRoute;
+export default offerRoutes;
 // This code defines the routes for the general module in an Express application.

@@ -12,6 +12,7 @@ export type TProduct = {
   tags?: string[]; // Optional tags
   rating?: number; // Average customer rating;
   gender: "male" | "female";
+  haveOffer: boolean;
 };
 
 export default TProduct;

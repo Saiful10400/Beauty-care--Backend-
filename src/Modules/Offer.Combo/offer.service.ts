@@ -1,3 +1,7 @@
+import appError from "../../Errors/appError";
+import { generalModel } from "../General/general.model";
+import { productModel } from "../Product/product.model";
+
 import comboOfferModle from "./offer.model";
 import TComboOffer from "./Offer.types";
 
@@ -16,10 +20,65 @@ const deletecombo = async (id: string) => {
 // get combo.
 
 const getComboOffers = async () => {
-  const result = await comboOfferModle.find().populate("categoryIds").populate("brandsId")
-
+  const result = await comboOfferModle
+    .find()
+    .populate("categoryIds")
+    .populate("brandsId");
   return result;
 };
 
-const offerService = { createCombo, deletecombo, getComboOffers };
+// update free offer for a separet perchese
+const updateFreeGiftOffer = async (payload: {
+  product: string;
+  buyAbove: number;
+  applicable: boolean;
+}) => {
+  const updateObj: Record<string, string | number | boolean> = {};
+
+  Object.keys(payload).forEach((e) => {
+    updateObj[`freeGift.${e}`] = payload[e as keyof typeof payload];
+  });
+  const result = await generalModel.findOneAndUpdate(
+    {},
+    { $set: updateObj },
+    { new: true }
+  );
+  return result;
+};
+
+// give a percentage offer.
+const updatePercentageOffer = async (payload: string[], percentage: number) => {
+  try {
+    // get all targeted product.
+    const products = await productModel.find({ _id: { $in: payload } });
+
+    const updatedOfferProducts = products.map((item) => {
+      return {
+        updateOne: {
+          filter: { _id: item._id },
+          update: {
+            $set: {
+              discountPrice:
+                item.price - Math.ceil(item.price * (percentage / 100)),
+              haveOffer: true,
+            },
+          },
+        },
+      };
+    });
+
+    const result = await productModel.bulkWrite(updatedOfferProducts);
+    return result;
+  } catch (err) {
+    new appError(400, "faild to update");
+  }
+};
+
+const offerService = {
+  createCombo,
+  deletecombo,
+  getComboOffers,
+  updateFreeGiftOffer,
+  updatePercentageOffer,
+};
 export default offerService;

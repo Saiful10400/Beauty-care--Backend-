@@ -6,7 +6,8 @@ import productRouter from "../Modules/Product/product.routes";
 import orderRouter from "../Modules/Order/order.routes";
 import bannerRoute from "../Modules/Banner/banner.routes";
 import facebookReviewRoute from "../Modules/FacebookReview(admin)/review.route";
-import comboOfferRoute from "../Modules/Offer.Combo/offer.routes";
+import offerRoutes from "../Modules/Offer.Combo/offer.routes";
+
 
 const routes = Router();
 
@@ -40,8 +41,8 @@ const moduleRoutes = [
     route: facebookReviewRoute,
   },
   {
-    path: "/comboOffer",
-    route: comboOfferRoute,
+    path: "/offer",
+    route: offerRoutes,
   },
 ];
 

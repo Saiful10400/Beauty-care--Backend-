@@ -13,8 +13,13 @@ const generalSchema = new Schema<Tgeneral>(
       facebook: { type: String, required: true },
       instagram: { type: String, required: true },
     },
+    freeGift: {
+      product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
+      buyAbove: { type: Number, required: true },
+      applicable: { type: Boolean, default: true },
+    },
   },
-  { timestamps: true ,versionKey:false}
+  { timestamps: true, versionKey: false }
 );
 
 export const generalModel = model<Tgeneral>("General", generalSchema);

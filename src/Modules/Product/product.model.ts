@@ -51,6 +51,11 @@ const ProductSchema = new Schema(
       enum: ["male", "female"],
       required: true, // change to true if needed
     },
+    haveOffer: {
+      type: Boolean,
+      default: false,
+      required: true, // change to true if needed
+    },
   },
   {
     timestamps: true,
