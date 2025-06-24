@@ -8,16 +8,16 @@ const ProductSchema = new Schema(
     description: { type: String },
     shortDescription: { type: String },
 
-    // Reference to Brand (as ObjectId)
+    // Reference to Brand
     brandId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Brand",
       required: true,
     },
 
-    // Array of references to Category
+    // Fix: Should be an array of ObjectIds
     categoryIds: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Category",
       required: true,
     },
@@ -30,10 +30,10 @@ const ProductSchema = new Schema(
     images: {
       type: [String],
       required: true,
-      validate: [
-        (val: string[]) => val.length > 0,
-        "At least one image is required.",
-      ],
+      validate: {
+        validator: (val: string[]) => val.length > 0,
+        message: "At least one image is required.",
+      },
     },
 
     tags: { type: [String], default: [] },
@@ -44,12 +44,20 @@ const ProductSchema = new Schema(
       max: 5,
       default: 0,
     },
+
+    // Fix: 'type' is missing and 'required' should be added if necessary
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+      required: true, // change to true if needed
+    },
   },
   {
-    timestamps: true, // adds createdAt and updatedAt
+    timestamps: true,
     versionKey: false,
   }
 );
 
-// Export the model
-export const productModel = model("Product", ProductSchema);
+// Optional: Prevent model overwrite issue in development
+export const productModel =
+  mongoose.models.Product || model("Product", ProductSchema);
