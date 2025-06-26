@@ -26,7 +26,8 @@ const deleteComboOffer = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAll = catchAsync(async (req: Request, res: Response) => {
-  const data = await offerService.getComboOffers();
+  const { limit, offset } = req.query;
+  const data = await offerService.getComboOffers(Number(limit), Number(offset));
   sendResponse(res, {
     data,
     success: true,
@@ -46,24 +47,28 @@ const updateFreeOffer = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
 /// update percentage offer.
-const updatePercentegeOffer = catchAsync(async (req: Request, res: Response) => {
-  const{percentage}=req.query
-  const data = await offerService.updatePercentageOffer(req.body,Number(percentage));
-  sendResponse(res, {
-    data,
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "free offer project updated successfully",
-  });
-});
+const updatePercentegeOffer = catchAsync(
+  async (req: Request, res: Response) => {
+    const { percentage } = req.query;
+    const data = await offerService.updatePercentageOffer(
+      req.body,
+      Number(percentage)
+    );
+    sendResponse(res, {
+      data,
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "free offer project updated successfully",
+    });
+  }
+);
 
 const offercontroller = {
   createComboOffer,
   deleteComboOffer,
   getAll,
   updateFreeOffer,
-  updatePercentegeOffer
+  updatePercentegeOffer,
 };
 export default offercontroller;

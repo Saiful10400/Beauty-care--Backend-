@@ -10,17 +10,21 @@ type tApi = {
 };
 
 const apis: tApi[] = [
-  { method: "post", path: "/create", fn: offercontroller.createComboOffer },
+  {
+    method: "post",
+    path: "/combo-offer/create",
+    fn: offercontroller.createComboOffer,
+  },
 
   {
     method: "delete",
-    path: "/delete/:id",
+    path: "/combo-offer/delete/:id",
     fn: offercontroller.deleteComboOffer,
   },
 
   {
     method: "get",
-    path: "/get",
+    path: "/combo-offer/get",
     fn: offercontroller.getAll,
   },
   {

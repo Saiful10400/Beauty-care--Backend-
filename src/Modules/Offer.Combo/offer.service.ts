@@ -19,12 +19,14 @@ const deletecombo = async (id: string) => {
 
 // get combo.
 
-const getComboOffers = async () => {
+const getComboOffers = async (limit: number, offset: number) => {
   const result = await comboOfferModle
     .find()
+    .limit(limit)
+    .skip(offset)
     .populate("categoryIds")
     .populate("brandsId");
-  return result;
+  return { result, total: await comboOfferModle.countDocuments() };
 };
 
 // update free offer for a separet perchese
