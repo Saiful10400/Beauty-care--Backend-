@@ -37,7 +37,9 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 
 // get all products controller
 const getProducts = catchAsync(async (req: Request, res: Response) => {
-  const data = await productService.getProducts();
+ 
+  if (req.query.haveOffer) req.query.haveOffer = "true";
+  const data = await productService.getProducts(req.query);
   sendResponse(res, {
     data,
     success: true,

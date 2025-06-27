@@ -49,7 +49,7 @@ const updateFreeGiftOffer = async (payload: {
 };
 
 // give a percentage offer.
-const updatePercentageOffer = async (payload: string[], percentage: number) => {
+const createPercentageOffer = async (payload: string[], percentage: number) => {
   try {
     // get all targeted product.
     const products = await productModel.find({ _id: { $in: payload } });
@@ -70,10 +70,20 @@ const updatePercentageOffer = async (payload: string[], percentage: number) => {
     });
 
     const result = await productModel.bulkWrite(updatedOfferProducts);
+  
     return result;
   } catch (err) {
     new appError(400, "faild to update");
   }
+};
+
+// delete percentageOffer.
+const deletePercentageOffer = async (id: string) => {
+  const result = await productModel.findByIdAndUpdate(id, {
+    discountPrice: 0,
+    haveOffer: false,
+  });
+  return result;
 };
 
 const offerService = {
@@ -81,6 +91,7 @@ const offerService = {
   deletecombo,
   getComboOffers,
   updateFreeGiftOffer,
-  updatePercentageOffer,
+  createPercentageOffer,
+  deletePercentageOffer,
 };
 export default offerService;

@@ -1,3 +1,4 @@
+import { FilterQuery } from "mongoose";
 import { productModel } from "./product.model";
 import TProduct from "./product.types";
 
@@ -16,13 +17,19 @@ const getProductById = async (id: string) => {
   return result;
 };
 // get product by slug service
-const getProducts = async () => {
+const getProducts = async ({
+  limit,
+  offset,
+  ...query
+}: FilterQuery<TProduct>) => {
+  
   const result = await productModel
-    .find()
+    .find(query)
     .populate("brandId")
-    .populate("categoryIds");
-  return { result, total: await productModel.countDocuments() };
-  return result;
+    .populate("categoryIds")
+    .limit(limit)
+    .skip(offset);
+  return { result, total: await productModel.countDocuments(query) };
 };
 
 // update product service

@@ -29,13 +29,18 @@ const apis: tApi[] = [
   },
   {
     method: "put",
-    path: "/update/freeGift",
+    path: "/freeGift/update",
     fn: offercontroller.updateFreeOffer,
   },
   {
-    method: "put",
-    path: "/update/percentageOffer",
-    fn: offercontroller.updatePercentegeOffer,
+    method: "post",
+    path: "/percentageOffer/create",
+    fn: offercontroller.createPercentageOffer,
+  },
+  {
+    method: "delete",
+    path: "/percentageOffer/delete/:id",
+    fn: offercontroller.deletePercentageOffer,
   },
 ];
 
