@@ -12,7 +12,7 @@ const updateGeneral = async (payload: Partial<Tgeneral>) => {
 
 //get general.
 const getGeneral = async () => {
-  const result = await generalModel.findOne();
+  const result = await generalModel.findOne().populate("freeGift.product");
   return result;
 };
 
