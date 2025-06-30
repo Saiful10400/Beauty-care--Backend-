@@ -17,6 +17,19 @@ const getProductById = async (id: string) => {
     .populate("categoryIds"); // populate category details
   return result;
 };
+
+
+// get a product by slug.
+const getProductBySlug = async (slug: string) => {
+   
+  const result = await productModel
+    .findOne({slug}) // find product by id
+    .populate("brandId") // populate brand details
+    .populate("categoryIds"); // populate category details
+  return result;
+};
+
+
 // get all products
 const getProducts = async ({
   limit,
@@ -118,5 +131,6 @@ const productService = {
   deleteProduct,
   getProducts,
   getProductById,
+  getProductBySlug
 };
 export default productService;

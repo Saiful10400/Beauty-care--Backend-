@@ -17,6 +17,11 @@ const apis: tApi[] = [
     fn: productcontroller.getProductById,
   },
   {
+    method: "get",
+    path: "/get/slug/:slug",
+    fn: productcontroller.getProductBySlug,
+  },
+  {
     method: "put",
     path: "/update/:id",
     fn: productcontroller.updateAProduct,
