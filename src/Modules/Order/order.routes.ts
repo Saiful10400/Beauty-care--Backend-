@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import orderController from "./order.controller";
 
 const orderRouter = Router();
-
+ 
 type tApi = {
   path: string;
   method: "get" | "post" | "put" | "delete";
