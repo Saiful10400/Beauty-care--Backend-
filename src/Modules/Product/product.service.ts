@@ -2,6 +2,7 @@ import { FilterQuery, SortOrder } from "mongoose";
 import { productModel } from "./product.model";
 import TProduct from "./product.types";
 import comboOfferModle from "../Offer.Combo/offer.model";
+import TComboOffer from "../Offer.Combo/Offer.types";
 
 // create product service
 const createProduct = async (payload: TProduct) => {
@@ -18,19 +19,27 @@ const getProductById = async (id: string) => {
   return result;
 };
 
-
 // get a product by slug.
-const getProductBySlug = async (slug: string) => {
-   
+const getProductBySlug = async (
+  slug: string,
+  query: FilterQuery<TComboOffer>
+) => {
+  if (query.isCombo === "true") {
+    const result = await comboOfferModle
+      .findOne({ slug }) // find product by id
+      .populate("brandsId") // populate brand details
+      .populate("categoryIds"); // populate category details
+    return result;
+  }
+
   const result = await productModel
-    .findOne({slug}) // find product by id
+    .findOne({ slug }) // find product by id
     .populate("brandId") // populate brand details
     .populate("categoryIds"); // populate category details
   return result;
 };
 
-
-// get all products
+// get all productsyar
 const getProducts = async ({
   limit,
   offset,
@@ -79,16 +88,18 @@ const getProducts = async ({
   if (query.inStock) {
     conditions.push({ inStock: query.inStock === "true" });
   }
-  if (query.haveOffers) {
+  if (query.haveOffers && (query.comboOffer === "false" || !query.comboOffer)) {
     conditions.push({ haveOffer: query.haveOffers === "true" });
   }
 
+  console.log(query);
   console.dir(conditions, { depth: "infinity" });
 
-  if (query.comboOffer) {
+  if (query.comboOffer === "true") {
     const result = await comboOfferModle
       .find({ $and: [...conditions] })
       .populate("categoryIds")
+      .populate("brandsId")
       .limit(limit)
       .skip(offset)
       .sort({ _id: order as SortOrder });
@@ -131,6 +142,6 @@ const productService = {
   deleteProduct,
   getProducts,
   getProductById,
-  getProductBySlug
+  getProductBySlug,
 };
 export default productService;

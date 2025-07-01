@@ -40,7 +40,8 @@ const getProductById = catchAsync(async (req: Request, res: Response) => {
 // get a product by slug controller
 const getProductBySlug = catchAsync(async (req: Request, res: Response) => {
   const { slug } = req.params;
-  const data = await productService.getProductBySlug(slug);
+    const{isCombo}=req.query
+  const data = await productService.getProductBySlug(slug,{isCombo});
   if (!data) {
     return sendResponse(res, {
       data: null,
@@ -89,6 +90,7 @@ const updateAProduct = catchAsync(async (req: Request, res: Response) => {
 // delete a product controller.
 const deleteAProduct = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
+
   const data = await productService.deleteProduct(id);
   sendResponse(res, {
     data,
