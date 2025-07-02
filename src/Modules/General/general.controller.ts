@@ -27,9 +27,21 @@ const getGeneral = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// login hadnle//
+const loginHandle = catchAsync(async (req: Request, res: Response) => {
+  const data = await generalService.loginHandle(req.body);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "login status",
+  });
+});
+
 const generalController = {
   updateGeneral,
   getGeneral,
+  loginHandle,
 };
 export default generalController;
 // This code defines a controller for updating general settings in an Express application.

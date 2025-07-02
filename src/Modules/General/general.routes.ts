@@ -12,6 +12,7 @@ type tApi = {
 const apis: tApi[] = [
   { method: "put", path: "/update", fn: generalController.updateGeneral },
   { method: "get", path: "/get", fn: generalController.getGeneral },
+  { method: "post", path: "/login", fn: generalController.loginHandle },
 ];
 
 apis.forEach((api) => {

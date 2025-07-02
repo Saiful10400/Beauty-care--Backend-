@@ -3,7 +3,6 @@ import { Tgeneral } from "./general.types";
 
 // update general.
 const updateGeneral = async (payload: Partial<Tgeneral>) => {
- 
   const result = await generalModel.findOneAndUpdate({}, payload, {
     upsert: true,
   });
@@ -16,5 +15,15 @@ const getGeneral = async () => {
   return result;
 };
 
-const generalService = { updateGeneral, getGeneral };
+// login handle.
+const loginHandle = async (paylod: { password: string; email: string }) => {
+  const result = await generalModel.findOne({ auth: paylod });
+  if (result) {
+    return { authorized: true };
+  } else {
+    return { authorized: false };
+  }
+};
+
+const generalService = { updateGeneral, getGeneral, loginHandle };
 export default generalService;

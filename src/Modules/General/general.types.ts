@@ -9,4 +9,5 @@ export type Tgeneral = {
 
   // offer related.
   freeGift: { product: string; buyAbove: number; applicable: boolean };
+  auth: { product: string; password: string };
 };

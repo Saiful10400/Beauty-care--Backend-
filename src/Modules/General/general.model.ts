@@ -18,6 +18,10 @@ const generalSchema = new Schema<Tgeneral>(
       buyAbove: { type: Number, required: true },
       applicable: { type: Boolean, default: true },
     },
+    auth: {
+      password: { type: String, required: false },
+      email: { type: String, required: false },
+    },
   },
   { timestamps: true, versionKey: false }
 );
