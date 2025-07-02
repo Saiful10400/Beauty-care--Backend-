@@ -1,3 +1,4 @@
+import { FilterQuery } from "mongoose";
 import bannerModel from "./banner.model";
 import { TBanner } from "./banner.types";
 
@@ -16,8 +17,14 @@ const updateBanner = async (id: string, payload: Partial<TBanner>) => {
 };
 
 // get banners
-const getBanners = async () => {
-  const result = await bannerModel.find();
+const getBanners = async (query: Partial<TBanner>) => {
+  const conditions: FilterQuery<TBanner>[] = [];
+
+  if (query?.isActive === "true") {
+    conditions.push({ isActive: true });
+  }
+
+  const result = await bannerModel.find({ $and: [...conditions] });
   return result;
 };
 

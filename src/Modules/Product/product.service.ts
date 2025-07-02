@@ -92,7 +92,7 @@ const getProducts = async ({
     conditions.push({ haveOffer: query.haveOffers === "true" });
   }
 
-  console.log(query);
+ 
   console.dir(conditions, { depth: "infinity" });
 
   if (query.comboOffer === "true") {

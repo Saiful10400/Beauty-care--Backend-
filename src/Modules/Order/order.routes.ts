@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import orderController from "./order.controller";
 
 const orderRouter = Router();
- 
+
 type tApi = {
   path: string;
   method: "get" | "post" | "put" | "delete";
@@ -11,11 +11,18 @@ type tApi = {
 
 const apis: tApi[] = [
   { method: "post", path: "/create", fn: orderController.createOrder },
+  { method: "put", path: "/update/:id", fn: orderController.updateAOrder },
+  { method: "delete", path: "/delete/:id", fn: orderController.deleteAOrder },
   {
     method: "get",
     path: "/get/:id",
     fn: orderController.getOrderById,
-  }
+  },
+  {
+    method: "get",
+    path: "/get",
+    fn: orderController.getAllOrder,
+  },
 ];
 
 apis.forEach((api) => {

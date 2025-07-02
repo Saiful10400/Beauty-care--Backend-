@@ -15,6 +15,17 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get all order by id.
+const getAllOrder = catchAsync(async (req: Request, res: Response) => {
+  const data = await orderService.getAllOrder();
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Orders retrieved successfully.",
+  });
+});
+
 // get a order by id.
 const getOrderById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -27,8 +38,35 @@ const getOrderById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// update a order by id.
+const updateAOrder = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await orderService.updateOrder(id, req.body);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Order updated successfully.",
+  });
+});
+
+// delete a order by id.
+const deleteAOrder = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await orderService.deleteOrder(id);
+  sendResponse(res, {
+    data,
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Order deleted successfully.",
+  });
+});
+
 const orderController = {
   createOrder,
   getOrderById,
+  getAllOrder,
+  updateAOrder,
+  deleteAOrder,
 };
 export default orderController;

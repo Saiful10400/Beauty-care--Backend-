@@ -36,7 +36,7 @@ const deleteBrand = async (id: string) => {
         throw new Error(`Brand with ID ${id} not found.`);
       }
 
-      console.log(`Deleted brand: ${deletedBrand.name}`);
+ 
 
       // 2. Delete all products associated with this brand
       const deleteResult = await productModel.deleteMany(

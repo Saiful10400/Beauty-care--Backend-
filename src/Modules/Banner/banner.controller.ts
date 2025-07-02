@@ -29,7 +29,7 @@ const updateBanner = catchAsync(async (req: Request, res: Response) => {
 
 // 3. get banners
 const getBanners = catchAsync(async (req: Request, res: Response) => {
-  const data = await bannerService.getBanners();
+  const data = await bannerService.getBanners(req.query);
   sendResponse(res, {
     data,
     success: true,
