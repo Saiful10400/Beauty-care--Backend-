@@ -54,10 +54,8 @@ const getProducts = async ({
         if (item === "maxPrice") return { price: { $lte: query.maxPrice } };
         if (item === "minPrice") return { price: { $gte: query.minPrice } };
       } else {
-        if (item === "maxPrice")
-          return { price: { $lte: query.maxPrice }, haveOffer: false };
-        if (item === "minPrice")
-          return { price: { $gte: query.minPrice }, haveOffer: false };
+        if (item === "maxPrice") return { price: { $lte: query.maxPrice } };
+        if (item === "minPrice") return { price: { $gte: query.minPrice } };
       }
       return {};
     });
@@ -94,8 +92,8 @@ const getProducts = async ({
   if (query.haveOffers) {
     conditions.push({ haveOffer: query.haveOffers === "true" });
   }
- 
-  console.dir({conditions,query}, { depth: "infinity" });
+
+  // console.dir({ conditions, query }, { depth: "infinity" });
 
   if (query.comboOffer === "true") {
     const result = await comboOfferModle
