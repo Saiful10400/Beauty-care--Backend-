@@ -13,7 +13,7 @@ const createBrand = async (payload: Tbrand) => {
 //get brands.
 
 const getBrands = async (limit: number, offset: number) => {
-  const result = await brandModel.find().limit(limit).skip(offset);
+  const result = await brandModel.find().limit(limit).skip(offset).sort({_id:-1});
   return { result, total: await brandModel.countDocuments() };
 };
 

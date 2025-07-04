@@ -9,7 +9,11 @@ const createCategory = async (payload: tCategory) => {
 
 // get all categories.
 const getAllCategories = async (limit: number, offset: number) => {
-  const result = await categoryModel.find({}).limit(limit).skip(offset);
+  const result = await categoryModel
+    .find({})
+    .limit(limit)
+    .skip(offset)
+    .sort({ _id: -1 });
   return { result, total: await categoryModel.countDocuments() };
 };
 

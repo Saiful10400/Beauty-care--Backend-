@@ -91,9 +91,11 @@ const getProducts = async ({
   if (query.haveOffers && (query.comboOffer === "false" || !query.comboOffer)) {
     conditions.push({ haveOffer: query.haveOffers === "true" });
   }
-
+  if (query.haveOffers) {
+    conditions.push({ haveOffer: query.haveOffers === "true" });
+  }
  
-  console.dir(conditions, { depth: "infinity" });
+  console.dir({conditions,query}, { depth: "infinity" });
 
   if (query.comboOffer === "true") {
     const result = await comboOfferModle
